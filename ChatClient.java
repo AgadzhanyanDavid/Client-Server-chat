@@ -18,7 +18,7 @@ import javax.swing.JTextField;
     // Фрейм с текстовым полем для ввода имени и самим полем чата
     // Отправляет имя с запросом на подтверждение, если все ок, то сервер подключает к серверу
 public class ChatClient {
-
+    //тест гитаб
     BufferedReader in;
     PrintWriter out;
     JFrame frame = new JFrame("Чат");

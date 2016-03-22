@@ -67,5 +67,34 @@ public class ChatServer {
 
                 out.println("NAMEACCEPTED"); // заносит этого пользователя в writers, для получения сообщений от других пользователей
                 writers.add(out);
+                
+                
+                    while (true) { // отправка сообщение пользователем
+                    String input = in.readLine();
+                    if (input == null) {
+                        return;
+                    }
+                    for (PrintWriter writer : writers) {
+                        writer.println("MESSAGE " + name + ": " + input);
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println(e);
+            } finally {
+                if (name != null) { //клиент вышел
+                    names.remove(name);
+                }
+                if (out != null) {
+                    writers.remove(out);
+                }
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
+}
+
 
 

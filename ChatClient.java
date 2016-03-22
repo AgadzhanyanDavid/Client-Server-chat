@@ -56,6 +56,27 @@ public class ChatClient {
                 "Выбор имени",
                 JOptionPane.PLAIN_MESSAGE);
     }
+    
+    private void run() throws IOException { // подключение к серверу
+        // подключение
+        String serverAddress = getServerAddress();
+        Socket socket = new Socket(serverAddress, 9001);
+        in = new BufferedReader(new InputStreamReader(
+                socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
+
+        // обработка сообщений от сервера в соответствии с протоколом
+        while (true) {
+            String line = in.readLine();
+            if (line.startsWith("SUBMITNAME")) {
+                out.println(getName());
+            } else if (line.startsWith("NAMEACCEPTED")) {
+                textField.setEditable(true);
+            } else if (line.startsWith("MESSAGE")) {
+                messageArea.append(line.substring(8) + "\n");
+            }
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         ChatClient client = new ChatClient();
